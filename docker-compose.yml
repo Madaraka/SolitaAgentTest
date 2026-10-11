@@ -1,0 +1,19 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: solita
+      POSTGRES_PASSWORD: solita
+      POSTGRES_DB: bars
+    volumes:
+      - solita_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U solita -d bars"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  solita_pgdata:
